@@ -8,6 +8,9 @@ var allowDirectDomains = (exports.allowDirectDomains = [
   'https://images.mirror-media.xyz',
   'https://mirror.xyz',
   'https://ecn.mirror.xyz',
+  'https://gateway.pinata.cloud',
+  'https://news.ethereum.cn',
+  'https://vitalik.ca',
 ])
 
 var isStartWithAllowDirectDomains = (exports.isStartWithAllowDirectDomains = function isStartWithAllowDirectDomains(
