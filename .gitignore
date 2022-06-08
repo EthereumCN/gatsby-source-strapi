@@ -2,8 +2,9 @@
 /yarn.lock
 node_modules
 .idea
-/authentication.js
-/fetch.js
-/normalize.js
-/gatsby-node.js
-/nodes.js
+.eslintcache
+# /authentication.js
+# /fetch.js
+# /normalize.js
+# /gatsby-node.js
+# /nodes.js
