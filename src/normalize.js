@@ -1,4 +1,5 @@
 import { has } from 'lodash/fp'
+import { isStartWithAllowDirectDomains } from './allowDirectImgDomain'
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const commonmark = require('commonmark')
 
@@ -20,6 +21,7 @@ const extractFields = async (apiURL, store, cache, createNode, touchNode, auth, 
 
   for (const key of Object.keys(item)) {
     const field = item[key]
+
     if (Array.isArray(field)) {
       // add recursion to fetch nested strapi references
       await Promise.all(
@@ -97,10 +99,11 @@ const extractFields = async (apiURL, store, cache, createNode, touchNode, auth, 
               touchNode({ nodeId: cacheMediaData.fileNodeID })
             }
 
-            if (!fileNodeID) {
+            if (!fileNodeID && !isStartWithAllowDirectDomains(filePathname)) {
               try {
                 // full media url
                 const source_url = `${filePathname.startsWith('http') ? '' : apiURL}${filePathname}`
+                console.log(item.id, ' source_url', source_url)
 
                 const fileNode = await createRemoteFileNode({
                   url: source_url,
@@ -123,17 +126,17 @@ const extractFields = async (apiURL, store, cache, createNode, touchNode, auth, 
               } catch (e) {
                 // Ignore
               }
-            }
-            if (fileNodeID) {
-              // create an array of parsed and downloaded images as a new field
-              if (!item[`${key}_images___NODE`]) {
-                item[`${key}_images___NODE`] = []
-              }
-              item[`${key}_images___NODE`].push(fileNodeID)
+              if (fileNodeID) {
+                // create an array of parsed and downloaded images as a new field
+                if (!item[`${key}_images___NODE`]) {
+                  item[`${key}_images___NODE`] = []
+                }
+                item[`${key}_images___NODE`].push(fileNodeID)
 
-              // replace filePathname with the newly created base
-              // useful for future operations in Gatsby
-              item[key] = item[key].replace(filePathname, fileNodeBase)
+                // replace filePathname with the newly created base
+                // useful for future operations in Gatsby
+                item[key] = item[key].replace(filePathname, fileNodeBase || filePathname)
+              }
             }
           }
         }
