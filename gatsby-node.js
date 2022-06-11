@@ -202,3 +202,12 @@ exports.sourceNodes = (function() {
     return _ref.apply(this, arguments)
   }
 })()
+
+exports.createSchemaCustomization = function(_ref6) {
+  var actions = _ref6.actions
+  var createTypes = actions.createTypes
+
+  var typeDefs =
+    '\n    type StrapiArticles implements Node {\n      content_images: CIData\n    }\n    type CIData {\n        base: String\n        publicURL: String\n    }\n  '
+  createTypes(typeDefs)
+}
