@@ -300,7 +300,7 @@ var extractFields = (function() {
                 }
 
                 if (!(!_fileNodeID && !(0, _allowDirectImgDomain.isStartWithAllowDirectDomains)(filePathname))) {
-                  _context2.next = 75
+                  _context2.next = 74
                   break
                 }
 

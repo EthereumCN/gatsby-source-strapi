@@ -131,13 +131,13 @@ const extractFields = async (apiURL, store, cache, createNode, touchNode, auth, 
               } catch (e) {
                 // Ignore
               }
-              if (fileNodeID) {
-                item[`${key}_images___NODE`].push(fileNodeID)
+            }
+            if (fileNodeID) {
+              item[`${key}_images___NODE`].push(fileNodeID)
 
-                // replace filePathname with the newly created base
-                // useful for future operations in Gatsby
-                item[key] = item[key].replace(filePathname, fileNodeBase || filePathname)
-              }
+              // replace filePathname with the newly created base
+              // useful for future operations in Gatsby
+              item[key] = item[key].replace(filePathname, fileNodeBase || filePathname)
             }
           }
         }
