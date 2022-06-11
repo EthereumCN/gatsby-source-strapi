@@ -80,6 +80,11 @@ const extractFields = async (apiURL, store, cache, createNode, touchNode, auth, 
         const walker = parsed.walker()
         let event, node
 
+        // create an array of parsed and downloaded images as a new field
+        if (!item[`${key}_images___NODE`]) {
+          item[`${key}_images___NODE`] = []
+        }
+
         while ((event = walker.next())) {
           node = event.node
           // process image nodes
@@ -127,10 +132,6 @@ const extractFields = async (apiURL, store, cache, createNode, touchNode, auth, 
                 // Ignore
               }
               if (fileNodeID) {
-                // create an array of parsed and downloaded images as a new field
-                if (!item[`${key}_images___NODE`]) {
-                  item[`${key}_images___NODE`] = []
-                }
                 item[`${key}_images___NODE`].push(fileNodeID)
 
                 // replace filePathname with the newly created base
