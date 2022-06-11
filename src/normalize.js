@@ -80,11 +80,6 @@ const extractFields = async (apiURL, store, cache, createNode, touchNode, auth, 
         const walker = parsed.walker()
         let event, node
 
-        // create an array of parsed and downloaded images as a new field
-        if (!item[`${key}_images___NODE`]) {
-          item[`${key}_images___NODE`] = []
-        }
-
         while ((event = walker.next())) {
           node = event.node
           // process image nodes
@@ -99,6 +94,7 @@ const extractFields = async (apiURL, store, cache, createNode, touchNode, auth, 
             // If we have cached media data and it wasn't modified, reuse
             // previously created file node to not try to redownload
             if (cacheMediaData) {
+              console.log(item.id, ' cacheMediaData', filePathname)
               fileNodeID = cacheMediaData.fileNodeID
               fileNodeBase = cacheMediaData.fileNodeBase
               touchNode({ nodeId: cacheMediaData.fileNodeID })
@@ -133,6 +129,10 @@ const extractFields = async (apiURL, store, cache, createNode, touchNode, auth, 
               }
             }
             if (fileNodeID) {
+              // create an array of parsed and downloaded images as a new field
+              if (!item[`${key}_images___NODE`]) {
+                item[`${key}_images___NODE`] = []
+              }
               item[`${key}_images___NODE`].push(fileNodeID)
 
               // replace filePathname with the newly created base

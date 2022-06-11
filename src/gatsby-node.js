@@ -103,11 +103,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
     type StrapiArticles implements Node {
-      content_images: CIData
-    }
-    type CIData {
-        base: String
-        publicURL: String
+      content_images: [File]
     }
   `
   createTypes(typeDefs)

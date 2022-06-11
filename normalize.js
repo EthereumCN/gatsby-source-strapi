@@ -105,7 +105,7 @@ var extractFields = (function() {
 
               case 6:
                 if ((_iteratorNormalCompletion = (_step = _iterator.next()).done)) {
-                  _context2.next = 80
+                  _context2.next = 79
                   break
                 }
 
@@ -153,7 +153,7 @@ var extractFields = (function() {
                 )
 
               case 12:
-                _context2.next = 77
+                _context2.next = 76
                 break
 
               case 14:
@@ -227,7 +227,7 @@ var extractFields = (function() {
                 if (fileNodeID) {
                   item[key + '___NODE'] = fileNodeID
                 }
-                _context2.next = 77
+                _context2.next = 76
                 break
 
               case 38:
@@ -245,12 +245,12 @@ var extractFields = (function() {
                 return extractFields(apiURL, store, cache, createNode, touchNode, auth, field, options)
 
               case 41:
-                _context2.next = 77
+                _context2.next = 76
                 break
 
               case 43:
                 if (!(field !== null && shouldParseForImages(key))) {
-                  _context2.next = 77
+                  _context2.next = 76
                   break
                 }
 
@@ -259,15 +259,9 @@ var extractFields = (function() {
                 walker = parsed.walker()
                 ;(event = void 0), (node = void 0)
 
-                // create an array of parsed and downloaded images as a new field
-
-                if (!item[key + '_images___NODE']) {
-                  item[key + '_images___NODE'] = []
-                }
-
-              case 48:
+              case 47:
                 if (!(event = walker.next())) {
-                  _context2.next = 77
+                  _context2.next = 76
                   break
                 }
 
@@ -275,7 +269,7 @@ var extractFields = (function() {
                 // process image nodes
 
                 if (!(event.entering && node.type === 'image')) {
-                  _context2.next = 75
+                  _context2.next = 74
                   break
                 }
 
@@ -285,33 +279,34 @@ var extractFields = (function() {
                 // using filePathname on the cache key for multiple image field
 
                 _mediaDataCacheKey = 'strapi-media-' + item.id + '-' + filePathname
-                _context2.next = 56
+                _context2.next = 55
                 return cache.get(_mediaDataCacheKey)
 
-              case 56:
+              case 55:
                 _cacheMediaData = _context2.sent
 
                 // If we have cached media data and it wasn't modified, reuse
                 // previously created file node to not try to redownload
                 if (_cacheMediaData) {
+                  console.log(item.id, ' cacheMediaData', filePathname)
                   _fileNodeID = _cacheMediaData.fileNodeID
                   fileNodeBase = _cacheMediaData.fileNodeBase
                   touchNode({ nodeId: _cacheMediaData.fileNodeID })
                 }
 
                 if (!(!_fileNodeID && !(0, _allowDirectImgDomain.isStartWithAllowDirectDomains)(filePathname))) {
-                  _context2.next = 74
+                  _context2.next = 73
                   break
                 }
 
-                _context2.prev = 59
+                _context2.prev = 58
 
                 // full media url
                 _source_url = '' + (filePathname.startsWith('http') ? '' : apiURL) + filePathname
 
                 console.log(item.id, ' source_url', _source_url)
 
-                _context2.next = 64
+                _context2.next = 63
                 return createRemoteFileNode({
                   url: _source_url,
                   store: store,
@@ -320,33 +315,37 @@ var extractFields = (function() {
                   auth: auth,
                 })
 
-              case 64:
+              case 63:
                 _fileNode = _context2.sent
 
                 if (!_fileNode) {
-                  _context2.next = 70
+                  _context2.next = 69
                   break
                 }
 
                 _fileNodeID = _fileNode.id
                 fileNodeBase = _fileNode.base
 
-                _context2.next = 70
+                _context2.next = 69
                 return cache.set(_mediaDataCacheKey, {
                   fileNodeID: _fileNodeID,
                   fileNodeBase: fileNodeBase,
                 })
 
-              case 70:
-                _context2.next = 74
+              case 69:
+                _context2.next = 73
                 break
 
-              case 72:
-                _context2.prev = 72
-                _context2.t1 = _context2['catch'](59)
+              case 71:
+                _context2.prev = 71
+                _context2.t1 = _context2['catch'](58)
 
-              case 74:
+              case 73:
                 if (_fileNodeID) {
+                  // create an array of parsed and downloaded images as a new field
+                  if (!item[key + '_images___NODE']) {
+                    item[key + '_images___NODE'] = []
+                  }
                   item[key + '_images___NODE'].push(_fileNodeID)
 
                   // replace filePathname with the newly created base
@@ -354,50 +353,50 @@ var extractFields = (function() {
                   item[key] = item[key].replace(filePathname, fileNodeBase || filePathname)
                 }
 
-              case 75:
-                _context2.next = 48
+              case 74:
+                _context2.next = 47
                 break
 
-              case 77:
+              case 76:
                 _iteratorNormalCompletion = true
                 _context2.next = 6
                 break
 
-              case 80:
-                _context2.next = 86
+              case 79:
+                _context2.next = 85
                 break
 
-              case 82:
-                _context2.prev = 82
+              case 81:
+                _context2.prev = 81
                 _context2.t2 = _context2['catch'](4)
                 _didIteratorError = true
                 _iteratorError = _context2.t2
 
-              case 86:
+              case 85:
+                _context2.prev = 85
                 _context2.prev = 86
-                _context2.prev = 87
 
                 if (!_iteratorNormalCompletion && _iterator.return) {
                   _iterator.return()
                 }
 
-              case 89:
-                _context2.prev = 89
+              case 88:
+                _context2.prev = 88
 
                 if (!_didIteratorError) {
-                  _context2.next = 92
+                  _context2.next = 91
                   break
                 }
 
                 throw _iteratorError
 
+              case 91:
+                return _context2.finish(88)
+
               case 92:
-                return _context2.finish(89)
+                return _context2.finish(85)
 
               case 93:
-                return _context2.finish(86)
-
-              case 94:
               case 'end':
                 return _context2.stop()
             }
@@ -406,10 +405,10 @@ var extractFields = (function() {
         _callee2,
         undefined,
         [
-          [4, 82, 86, 94],
+          [4, 81, 85, 93],
           [22, 33],
-          [59, 72],
-          [87, , 89, 93],
+          [58, 71],
+          [86, , 88, 92],
         ]
       )
     })
